@@ -288,7 +288,7 @@
     }
 
     /* ==========================================================================
-       4. ③ ロビー（VIPルーム） - 5ゲーム対応レスポンシブ
+       4. ③ ロビー（VIPルーム） - 4ゲーム対応レスポンシブ
        ========================================================================== */
     #lobby-screen {
       background: var(--casino-bg);
@@ -334,7 +334,7 @@
       outline: 1px solid rgba(252, 237, 197, 0.1);
       outline-offset: -5px;
       border-radius: 4px;
-      width: calc(33.33% - 15px);
+      width: calc(25% - 12px);
       min-width: 150px;
       height: 130px;
       display: flex;
@@ -766,10 +766,6 @@
           <div class="card-icon">👑</div>
           <div class="card-name cinema-text">BET BABANUKI</div>
         </div>
-        <div class="lobby-card" onclick="goToGame('poker-screen', 'card')">
-          <div class="card-icon">♦</div>
-          <div class="card-name cinema-text">BET POKER</div>
-        </div>
         <div class="lobby-card" onclick="goToGame('sicbo-screen', 'dice')">
           <div class="card-icon">🎲</div>
           <div class="card-name cinema-text">SIC BO</div>
@@ -919,66 +915,7 @@
     </div>
   </section>
 
-  <!-- ⑦ BET POKER ルール -->
-  <section id="poker-screen" class="screen">
-    <div class="table-rim"></div>
-    <button class="exit-btn cinema-text" onclick="backToLobby('poker-screen')">LOBBY</button>
-
-    <div class="game-content">
-      <div class="rule-icon">♦</div>
-      <div class="signboard">
-        <div class="sign-header cinema-text">BET POKER RULE</div>
-        <div class="sign-body">
-          <p>「BETポーカー」は、配布前のカードに対して勝敗を予想して賭ける、変則ポーカーゲームです。通常の5枚ドローポーカーのルールに基づき、役の強さで勝敗を決します。</p>
-
-          <div class="rule-section-title">① 事前ベット選択</div>
-          <p>カードが配られる前に、勝負の行方を以下の3つから選択してベットします。</p>
-
-          <table class="odds-table">
-            <thead>
-              <tr>
-                <th>ベット選択</th>
-                <th>条件</th>
-                <th>配当（オッズ）</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong style="color: #4da6ff;">🟦 PLAYER WIN</strong></td>
-                <td>参加者（プレイヤー）が役の強さで勝つ。</td>
-                <td><strong style="color: var(--gold-bright);">2 倍</strong></td>
-              </tr>
-              <tr>
-                <td><strong style="color: #ff4d4d;">🟥 DEALER WIN</strong></td>
-                <td>ディーラーが役の強さで勝つ。</td>
-                <td><strong style="color: var(--gold-bright);">2 倍</strong></td>
-              </tr>
-              <tr>
-                <td><strong style="color: #ffd700;">🟨 DRAW</strong></td>
-                <td>両者が全く同じ役・強さで引き分ける。</td>
-                <td><strong style="color: var(--gold-bright);">5 倍</strong></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="rule-section-title">② カード配布 ＆ 交換</div>
-          <ul>
-            <li>両者にそれぞれ5枚ずつのカードが配られます。</li>
-            <li>参加者・ディーラー共に、手札の不要なカードを<strong>「最大2回まで」</strong>交換することが可能です。</li>
-          </ul>
-
-          <div class="rule-section-title">③ 勝敗判定</div>
-          <ul>
-            <li>ポーカーの標準的な役の強さで比較します。</li>
-            <li><strong>役の優先順</strong>：ロイヤルフラッシュ ＞ ストレートフラッシュ ＞ フォーカード ＞ フルハウス ＞ フラッシュ ＞ ストレート ＞ スリーカード ＞ ツーペア ＞ ワンペア ＞ ハイカード</li>
-            <li>同役の場合は、より高い数字（ランク）を持っている方の勝利となります。（例：Aのワンペア ＞ Kのワンペア）</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ⑧ SIC BO ルール -->
+  <!-- ⑦ SIC BO ルール -->
   <section id="sicbo-screen" class="screen">
     <div class="table-rim"></div>
     <button class="exit-btn cinema-text" onclick="backToLobby('sicbo-screen')">LOBBY</button>
@@ -1069,7 +1006,7 @@
     </div>
   </section>
 
-  <!-- ⑨ エンドロール -->
+  <!-- ⑧ エンドロール -->
   <div id="credit-screen" class="screen">
     <div class="credit-container">
       <div class="credit-roll" id="roll-inner">
@@ -1130,7 +1067,7 @@
     </div>
   </div>
 
-  <!-- ⑩ ❄️ ホワイトアウト & Thank You 画面 -->
+  <!-- ⑨ ❄️ ホワイトアウト & Thank You 画面 -->
   <div id="thankyou-screen" class="screen">
     <div class="thankyou-wrap">
       <h2 class="thankyou-title cinema-text">THANK YOU FOR PLAYING</h2>
@@ -1627,7 +1564,6 @@
           document.getElementById('bj-screen').style.display = 'none';
           document.getElementById('indian-screen').style.display = 'none';
           document.getElementById('babanuki-screen').style.display = 'none';
-          document.getElementById('poker-screen').style.display = 'none';
           document.getElementById('sicbo-screen').style.display = 'none';
           document.getElementById('credit-screen').style.display = 'none';
           
