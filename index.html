@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>BET OR NOT, GET OR ROT.</title>
   <!-- 高級シネマティックフォント -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
@@ -24,6 +24,9 @@
       /* カジノの深みのある赤と黒のグラデーション背景 */
       --casino-bg: radial-gradient(circle at 50% 35%, #250606 0%, #080101 60%, #000000 100%);
       --card-bg: linear-gradient(135deg, #180909 0%, #050101 100%);
+
+      /* Dynamic Viewport Height for Mobile */
+      --app-height: 100vh;
     }
 
     * {
@@ -38,7 +41,7 @@
       color: #f7f3eb;
       font-family: 'Noto Sans JP', sans-serif;
       overflow: hidden;
-      height: 100vh;
+      height: var(--app-height);
       width: 100vw;
       user-select: none;
       perspective: 1200px;
@@ -96,8 +99,8 @@
     /* 戻る（ロビー）ボタン */
     .exit-btn {
       position: absolute;
-      top: 25px;
-      left: 25px;
+      top: calc(env(safe-area-inset-top, 0px) + 20px);
+      left: 20px;
       background: rgba(0, 0, 0, 0.85);
       border: 1px solid var(--gold-solid);
       outline: 1px solid rgba(252, 237, 197, 0.15);
@@ -124,7 +127,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: var(--app-height);
       overflow: hidden;
       display: none;
     }
@@ -296,11 +299,13 @@
       height: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: flex-start;
       align-items: center;
-      padding: 6vh 20px;
+      padding: calc(env(safe-area-inset-top, 0px) + 20px) 20px 20px 20px;
       position: relative;
       z-index: 5;
+      gap: 15px;
+      overflow-y: auto;
     }
 
     .lobby-title-area h2 {
@@ -311,13 +316,14 @@
       filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8));
       text-align: center;
       line-height: 1.3;
+      margin-top: 10px;
     }
 
     .lobby-cards {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       width: 100%;
       max-width: 950px;
     }
@@ -329,9 +335,8 @@
       outline-offset: -5px;
       border-radius: 4px;
       width: calc(33.33% - 15px);
-      min-width: 170px;
-      height: 20vh;
-      min-height: 130px;
+      min-width: 150px;
+      height: 130px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -341,6 +346,7 @@
       overflow: hidden;
       box-shadow: 0 15px 35px rgba(0,0,0,0.95);
       transition: all 0.4s;
+      flex-shrink: 0;
     }
 
     .lobby-card::before {
@@ -363,8 +369,8 @@
     }
 
     .card-icon {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
+      font-size: 2rem;
+      margin-bottom: 6px;
       color: var(--gold-solid);
       filter: drop-shadow(0 2px 5px rgba(0,0,0,0.9));
       transition: color 0.3s;
@@ -389,6 +395,8 @@
       font-size: 0.75rem;
       color: #6a5340;
       letter-spacing: 0.15em;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
 
     @media (max-width: 600px) {
@@ -396,20 +404,19 @@
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        width: 100%;
         max-width: 320px;
-        max-height: 60vh;
-        overflow-y: auto;
       }
       .lobby-card {
         width: 100%;
-        height: 10vh !important;
-        min-height: 65px !important;
+        height: 65px;
+        min-height: 65px;
       }
       .lobby-title-area h2 {
         font-size: 1.3rem;
       }
       .card-icon {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         margin-bottom: 2px;
       }
     }
@@ -425,6 +432,7 @@
       background: linear-gradient(to bottom, #180505, #000);
       border-bottom: 2.5px solid var(--gold-solid);
       box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+      z-index: 10;
     }
 
     .game-content {
@@ -434,9 +442,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 11vh 15px 2vh 15px;
-      gap: 2vh;
+      padding: calc(env(safe-area-inset-top, 0px) + 65px) 15px 20px 15px;
+      gap: 10px;
       background: var(--casino-bg);
+      box-sizing: border-box;
     }
 
     .signboard {
@@ -446,32 +455,36 @@
       outline-offset: -5px;
       width: 100%;
       max-width: 580px;
-      padding: 22px 25px;
+      padding: 18px;
       box-shadow: 0 25px 60px rgba(0,0,0,0.95);
       border-radius: 4px;
       display: flex;
       flex-direction: column;
-      max-height: 70vh;
+      flex: 1;
+      min-height: 0; /* Safari flex scroll fix */
     }
 
     .sign-header {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       background: var(--gold-metallic);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-align: center;
       border-bottom: 1px solid rgba(209, 158, 83, 0.3);
-      padding-bottom: 10px;
-      margin-bottom: 15px;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
       font-weight: 700;
+      flex-shrink: 0;
     }
 
     .sign-body {
       font-size: 0.85rem;
-      line-height: 1.7;
+      line-height: 1.6;
       color: #eae5da;
       overflow-y: auto;
-      padding-right: 10px;
+      padding-right: 8px;
+      -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
+      flex: 1;
     }
 
     .sign-body::-webkit-scrollbar {
@@ -487,11 +500,11 @@
 
     .rule-section-title {
       color: var(--gold-bright);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      margin: 18px 0 8px 0;
+      margin: 14px 0 6px 0;
       border-left: 3.5px solid var(--gold-solid);
-      padding-left: 10px;
+      padding-left: 8px;
     }
 
     .sign-body strong {
@@ -511,14 +524,14 @@
     .odds-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      font-size: 0.8rem;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      font-size: 0.78rem;
     }
 
     .odds-table th, .odds-table td {
       border: 1px solid rgba(209, 158, 83, 0.25);
-      padding: 8px 10px;
+      padding: 6px 8px;
       text-align: left;
     }
 
@@ -532,10 +545,11 @@
     }
 
     .rule-icon {
-      font-size: 2.4rem;
+      font-size: 2rem;
       text-align: center;
       color: var(--gold-solid);
       filter: drop-shadow(var(--gold-glow));
+      flex-shrink: 0;
     }
 
     /* ==========================================================================
@@ -849,7 +863,7 @@
     </div>
   </section>
 
-  <!-- ⑥ BET BABANUKI ルール (追加) -->
+  <!-- ⑥ BET BABANUKI ルール -->
   <section id="babanuki-screen" class="screen">
     <div class="table-rim"></div>
     <button class="exit-btn cinema-text" onclick="backToLobby('babanuki-screen')">LOBBY</button>
@@ -905,7 +919,7 @@
     </div>
   </section>
 
-  <!-- ⑦ BET POKER ルール (追加) -->
+  <!-- ⑦ BET POKER ルール -->
   <section id="poker-screen" class="screen">
     <div class="table-rim"></div>
     <button class="exit-btn cinema-text" onclick="backToLobby('poker-screen')">LOBBY</button>
@@ -1125,6 +1139,14 @@
   </div>
 
   <script>
+    // iOS Safari Dynamic Viewport Height Adjustment
+    const updateAppHeight = () => {
+      document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+    };
+    window.addEventListener('resize', updateAppHeight);
+    window.addEventListener('orientationchange', updateAppHeight);
+    updateAppHeight();
+
     // ==========================================================================
     // A. リアルタイム・ループBGM & 効果音エンジン（Web Audio API）
     // ==========================================================================
@@ -1520,6 +1542,9 @@
         .add(() => {
           document.getElementById('lobby-screen').style.display = 'none';
           document.getElementById(screenId).style.display = 'block';
+          // iPhoneスクロールの初期位置リセット
+          const activeSignbody = document.querySelector(`#${screenId} .sign-body`);
+          if (activeSignbody) activeSignbody.scrollTop = 0;
         })
         .to(gateL, { left: '-50%', duration: 1.2, ease: "power3.inOut", delay: 0.15 })
         .to(gateR, { right: '-50%', duration: 1.2, ease: "power3.inOut" }, "-=1.2");
